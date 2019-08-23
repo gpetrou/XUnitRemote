@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net452;netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- https://github.com/dotnet/sdk/issues/1675 -->
+  <Target Name="AddRuntimeDependenciesToContent" Condition=" '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" DependsOnTargets="GenerateBuildDependencyFile;GenerateBuildRuntimeConfigurationFiles" BeforeTargets="GetCopyToOutputDirectoryItems">
+    <ItemGroup>
+      <ContentWithTargetPath Include="$(ProjectDepsFilePath)" CopyToOutputDirectory="PreserveNewest" TargetPath="$(ProjectDepsFileName)" />
+      <ContentWithTargetPath Include="$(ProjectRuntimeConfigFilePath)" CopyToOutputDirectory="PreserveNewest" TargetPath="$(ProjectRuntimeConfigFileName)" />
+    </ItemGroup>
+  </Target>
+
+</Project>
